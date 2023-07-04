@@ -1,0 +1,55 @@
+// 1 or more philosophers
+// Activities: eat, think or sleep (one at a time)
+// Num of philosophers = num of forks
+// Eat, sleep then think => this is the order
+// Simulation stops when one dies
+// Program takes the parameters:
+// number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
+// They are sitting in a circle (philo 1 sits next to philo n_of_philos)
+// Death of a philosopher should be annouced no more than 10ms later
+
+//No data races
+
+// Each philo should be a thread
+// Start researching mutexes and threads
+//Threads
+//A comppnent of a process, multiple threads of a process may be executed concurrently, sharing resources such as memory
+// Threads of a process share its executable code and values of its dynamically allocated variables 
+//Multithreaded application
+//What is a thread? A single sequence stream within a process. Beause threads have some of the properties of processes, theya re sometimes called lightweight processes
+// Threads vs. processes? Threads are not independent from eachother like processes, they share their code section, data section and OS resources like open files and signals. But, liek processes, a thread has its own program counter (PC), register set and a stack space
+// Why multithreading? Threads are a popular way to improve appliation through parallelism. For example, in a browser, mul;tiple tabs can be different threads
+// Threads operate faster than processes due to: 1) thread creation is much faster/ 2) Context switching between threads is much faster/ 3_ Threads can be terminated easily/ 4) Communication between threads is faster
+
+//Mutex = Mutual Exclusion
+// Only one thread can be the owner of a mutex at one time
+// One thread locks the mutex and becomes the owner of it. If the mutex is locked, and another thread ones to own it, it has to wait for it to become unlocked first
+//
+
+
+// Stack vs. Heap
+// Heap memory is used by all the parts of the appplication whereas stack memory is unsed only by one thread of execution
+// The stack is not flexible, whereas heap is flxible.
+//Key Difference Between Stack and Heap Memory
+
+    // Stack is a linear data structure whereas Heap is a hierarchical data structure.
+    // Stack memory will never become fragmented whereas Heap memory can become fragmented as blocks of memory are first allocated and then freed.
+    // Stack accesses local variables only while Heap allows you to access variables globally.
+    // Stack variables can’t be resized whereas Heap variables can be resized.
+    // Stack memory is allocated in a contiguous block whereas Heap memory is allocated in any random order.
+    // Stack doesn’t require to de-allocate variables whereas in Heap de-allocation is needed.
+    // Stack allocation and deallocation are done by compiler instructions whereas Heap allocation and deallocation is done by the programmer.
+
+
+Code Vault Series
+1) intro
+A thread executes a function
+pthread_create() = to initialize a thread
+pthread_join = wait for the thread
+Threads a good for executing things in parallel 
+Threads are in the same process; same address space
+System resources are shared by threads. How about threads altering the same value? That is why you need mutexes
+Race condition
+
+Function pointers
+Error check all functions
