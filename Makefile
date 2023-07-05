@@ -6,7 +6,10 @@ C_FLAGS += -Werror
 C_FLAGS += -arch x86_64
 C_FLAGS += -g3 -fsanitize=address
 
-SRCS = main.c
+SRCS = philo.c \
+		philo_err.c \
+		philo_input.c \
+		philo_utils.c
 SRC_DIR = src
 
 OBJ_DIR = obj
