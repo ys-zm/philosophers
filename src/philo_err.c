@@ -25,5 +25,10 @@ int ft_error(int error_type)
         ft_putstr_fd("Optional: [number_of_times_each_philosopher_must_eat]\n", 2);
         return (ARG_ERR);
     }
+    else if (error_type == N_PHILO_ERR)
+    {
+        ft_putstr_fd("Minimum number of philosopher is 1 and maximum number is 200\n", 2);
+        return (N_PHILO_ERR);
+    }
     return (SUCCESS);   
 }

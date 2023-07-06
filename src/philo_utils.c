@@ -35,3 +35,17 @@ int ft_atoi(char *str)
         return (-1);
     return (ret);
 }
+
+void    philo_print(t_philo *philo, ph_event event)
+{
+    if (event == EAT)
+        printf("timestamp: philo %d is eating\n", philo->philo_id);
+    else if (event == THINK)
+        printf("timestamp: philo %d is thinking\n", philo->philo_id);
+    else if (event == SLEEP)
+        printf("timestamp: philo %d is sleeping\n", philo->philo_id);
+    else if (event == TAKE_FORK)
+        printf("timestamp: philo %d took a fork\n", philo->philo_id);
+    else if (event == DIE)
+        printf("timestamp: philo %d died\n", philo->philo_id);
+}

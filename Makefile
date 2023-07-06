@@ -9,7 +9,11 @@ C_FLAGS += -g3 -fsanitize=address
 SRCS = philo.c \
 		philo_err.c \
 		philo_input.c \
-		philo_utils.c
+		philo_utils.c \
+		philo_free.c \
+		philo_actions.c \
+		philo_init.c
+
 SRC_DIR = src
 
 OBJ_DIR = obj
