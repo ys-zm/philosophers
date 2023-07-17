@@ -53,3 +53,7 @@ Race condition
 
 Function pointers
 Error check all functions
+
+//Questions
+//why do you need a mutex for the num_of_times_eaten, death etc? how may mutexes do you need and how do you decide?
+
