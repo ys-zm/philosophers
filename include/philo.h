@@ -12,6 +12,7 @@
 #define MAX_PHILO 200
 #define MIN_PHILO 1
 
+typedef struct timeval t_timeval;
 
 typedef enum s_err_msg
 {
@@ -40,28 +41,30 @@ typedef enum s_event
 	DIE
 }	ph_event;
 
-// mutex protects a variable, doesnt ahve to be the variable
-// mutex for anything that tries to edit data at the same time
+// mutex protects a variable, doesnt have to be the variable
+// mutex has to be there for anything that tries to edit data at the same time
 // a thread that checks other threads
 typedef struct s_philo
 {
 	int				philo_id;
 	ph_status		status;
-	int				time_last_meal;
+	t_timeval		time_last_meal;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
 	bool			alive;
+	pthread_t		philo_thread;
 }	t_philo;
 
 typedef struct	s_var
 {
-	t_philo	*philos;
-	int		n_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	bool	death;
-	int		n_meals;
+	t_philo		*philos;
+	int			n_philos;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	bool		death;
+	t_timeval	start_time;
+	int			n_meals;
 }	t_var;
 
 
@@ -102,5 +105,10 @@ void		set_l_fork(t_philo *philos, int n_philos);
 int			get_time_ms(void);
 
 void		ft_sleep_ms(int time_to_sleep);
+
+
+// philo_simulation.c
+
+void    philo_simulation(t_var *data);
 
 #endif

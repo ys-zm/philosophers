@@ -1,5 +1,13 @@
 #include "philo.h"
 
+void    single_philo_death(t_philo *philo, int time_to_die)
+{
+    philo_print(philo, TAKE_FORK);
+    ft_sleep_ms(time_to_die);
+    philo_print(philo, DIE);
+}
+
+//need to create my ft_sleep_ms function to sleep a desired amount of ms
 int main(int argc, char **argv)
 {
     t_var   *data;
@@ -15,8 +23,12 @@ int main(int argc, char **argv)
         return (free(data), ft_error(N_PHILO_ERR));
     if (!init_philo(data))
         return (ft_free_philos(data), EXIT_FAILURE);
-
-    ft_sleep_ms(5000);
-
+    gettimeofday(&data->start_time, NULL);
+    if (data->time_to_die == 0)
+        philo_print(&data->philos[0], DIE);
+    else if (data->n_philos == 1)
+        single_philo_death(&data->philos[0], data->time_to_die);
+    else
+        philo_simulation(data);
     return (EXIT_SUCCESS);
 }
