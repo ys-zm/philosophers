@@ -11,9 +11,10 @@ SRCS = philo.c \
 		philo_input.c \
 		philo_utils.c \
 		philo_free.c \
-		philo_actions.c \
+		philo_time.c \
 		philo_init.c \
-		philo_simulation.c
+		philo_simulation.c \
+		philo_death.c
 
 SRC_DIR = src
 

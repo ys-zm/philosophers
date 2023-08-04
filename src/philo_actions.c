@@ -1,30 +1,25 @@
 #include "philo.h"
 
-//giving a negative result...
-int get_time_ms(void)
+bool    ft_check_thread_creation(t_var *data)
 {
-    t_timeval       tv;
-    uint32_t            ret;
+    int check;
 
-    gettimeofday(&tv, NULL);
-    ret = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-    printf("ret: %ud\n", ret);
-    return (ret);
+    pthread_mutex_lock(&data->philo_thread_mutex);
+    check = data->total_philo_threads;
+    pthread_mutex_unlock(&data->philo_thread_mutex);
+    if (check != data->n_philos)
+        return (false);
+    return (true);
 }
 
-void    ft_sleep_ms(int time_to_sleep)
-{
-    int start;
-    int current;
 
-    start = get_time_ms();
-    current = start;
-    printf("start: %d\n", start);
-    while ((current - start) < time_to_sleep)
-    {
-        usleep(50);
-        current = get_time_ms();
-    }
-    printf("diff %d\n", current - start);
-    printf("curr time: %d\n", current);
+// i can only pass one argument to my action loop, but i want to know the index and have the data struct :)
+void    *ft_action_loop(void *arg)
+{
+    t_var *data;
+
+    data = (t_var *)arg;
+    if (!ft_check_thread_creation(data))
+        return (NULL);
+    if (data->philos[i].p)
 }

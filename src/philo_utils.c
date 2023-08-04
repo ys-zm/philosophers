@@ -38,17 +38,17 @@ int ft_atoi(char *str)
 
 void    philo_print(t_philo *philo, ph_event event)
 {
-    int   now;
+    long   now;
 
-    now = get_time_ms();
+    now = find_time_diff(get_time_ms(), philo->start_time_ms);
     if (event == EAT)
-        printf("%d: philo %d is eating\n", now, philo->philo_id);
+        printf("%ld: philo %d is eating\n", now, philo->philo_id);
     else if (event == THINK)
-        printf("%d: philo %d is thinking\n", now, philo->philo_id);
+        printf("%ld: philo %d is thinking\n", now, philo->philo_id);
     else if (event == SLEEP)
-        printf("%d: philo %d is sleeping\n", now, philo->philo_id);
+        printf("%ld: philo %d is sleeping\n", now, philo->philo_id);
     else if (event == TAKE_FORK)
-        printf("%d: philo %d took a fork\n", now, philo->philo_id);
+        printf("%ld: philo %d took a fork\n", now, philo->philo_id);
     else if (event == DIE)
-        printf("%d: philo %d died\n", now, philo->philo_id);
+        printf("%ld: philo %d died\n", now, philo->philo_id);
 }
