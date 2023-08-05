@@ -42,6 +42,20 @@ typedef enum s_event
 	DIE
 }	ph_event;
 
+typedef struct	s_var
+{
+	int				n_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	t_timeval		start_time;
+	int				n_meals;
+	bool			is_dead;
+	pthread_mutex_t	death;
+	int				total_philo_threads;
+	pthread_mutex_t	philo_thread_mutex;
+}	t_var;
+
 // mutex protects a variable, doesnt have to be the variable
 // mutex has to be there for anything that tries to edit data at the same time
 // a thread that checks other threads
@@ -60,20 +74,6 @@ typedef struct s_philo
 	t_var			*data;
 }	t_philo;
 
-typedef struct	s_var
-{
-	t_philo			*philos;
-	int				n_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	t_timeval		start_time;
-	int				n_meals;
-	bool			is_dead;
-	pthread_mutex_t	death;
-	int				total_philo_threads;
-	pthread_mutex_t	philo_thread_mutex;
-}	t_var;
 
 
 // philo.c
@@ -100,15 +100,21 @@ bool		philo_input_check(char **argv, t_var *data);
 
 // philo_free.c
 
-void		ft_free_philos(t_var *data);
+void    	ft_free_philos(t_philo *philos);
 
-void    	ft_destroy_all_mutexes(t_var *data);
+void    	ft_destroy_all_mutexes(t_philo *philos);
 
 // philo_init.c
 
-bool    	ft_init(t_var *data);
+bool    	ft_init(t_var *data, t_philo *philos);
 
-bool    	init_philo(t_var *data);
+bool    	init_all_mutexes(t_philo *philos);
+
+bool    	init_data_mutexes(t_philo *philos);
+
+bool    	init_philo_mutexes(t_philo *philos);
+
+bool    	init_philo(t_var *data, t_philo *philos);
 
 void		set_l_fork(t_philo *philos, int n_philos);
 
@@ -124,6 +130,16 @@ long    	convert_ms(t_timeval t);
 
 // philo_simulation.c
 
-void    	philo_simulation(t_var *data);
+void    	philo_simulation(t_philo *philos);
+
+bool    	ft_join_threads(t_philo *philos);
+
+bool    	ft_create_threads(t_philo *philos);
+
+void    	*ft_action_loop(void *arg);
+
+// philo_death.c
+
+void    	philo_check_dead(t_philo *philos);
 
 #endif

@@ -1,52 +1,59 @@
 #include "philo.h"
 
-bool    ft_action_loop(t_var *data)
+void    *ft_action_loop(void *arg)
 {
+    (void)arg;
     //eat, sleep, think!
+    return (NULL);
 }
 
-bool    ft_create_threads(t_var *data)
+bool    ft_create_threads(t_philo *philos)
 {
     int i;
+    int n_philos;
 
-    pthread_mutex_lock(&data->philo_thread_mutex);
+    n_philos = philos->data->n_philos;
+    pthread_mutex_lock(&philos->data->philo_thread_mutex);
     i = 0;
-    data->total_philo_threads = 0;
-    data->is_dead = false;
-    while (i < data->n_philos)
+    philos->data->total_philo_threads = 0;
+    philos->data->is_dead = false;
+    while (i < n_philos)
     {
-        if (pthread_create(&data->philos[i].philo_thread))
+        if (pthread_create(&philos[i].philo_thread, NULL, ft_action_loop, &philos[i]))
             break ;
-        data->total_philo_threads += 1;
+        philos->data->total_philo_threads += 1;
         i++;
     }
-    pthread_mutex_unlock(&data->philo_thread_mutex);
-    if (data->total_philo_threads != data->n_philos)
+    pthread_mutex_unlock(&philos->data->philo_thread_mutex);
+    if (philos->data->total_philo_threads != n_philos)
         return (false);
     return (true);
 }
 
-bool    ft_join_threads(t_var *data)
+bool    ft_join_threads(t_philo *philos)
 {
     int i;
 
     i = 0;
-    while (i < data->total_philo_threads)
+    while (i < philos->data->total_philo_threads)
     {
-        pthread_join(&data->philos[i].philo_thread, NULL);
+        if (pthread_join(philos[i].philo_thread, NULL))
+            return (false);
         i++;
     }
+    return (true);
 }
 
-void    philo_simulation(t_var *data)
+void    philo_simulation(t_philo *philos)
 {
-    if (!ft_create_threads(data))
+    if (!ft_create_threads(philos))
     {
-        ft_destroy_all_mutexes(data);
-        ft_free_philos(data);
+        ft_destroy_all_mutexes(philos);
+        ft_free_philos(philos);
         printf("Error creating threads\n");
         return ;
     }
-    ft_check_if_dead(); //to stop the simulation when one dies
-    ft_join_threads(data);
+    philo_check_dead(philos);
+    if (!ft_join_threads(philos))
+        printf("Error joining threads\n");
 }
