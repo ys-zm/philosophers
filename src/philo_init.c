@@ -23,8 +23,10 @@ bool    init_philo(t_var *data, t_philo *philos)
         philos[i].status = ALIVE;
         philos[i].philo_id = i + 1;
         philos[i].data = data;
+        philos[i].meal_count = 0;
         i++;
     }
+    data->is_dead = false;
     return (true);
 }
 
@@ -41,7 +43,11 @@ bool    init_philo_mutexes(t_philo *philos)
         philo = &philos[i];
         if (pthread_mutex_init(&philo->r_fork, NULL))
             return (ft_error(MUTEX_ERR), false);
-        if (pthread_mutex_init(&philo->eat_count_mutex, NULL))
+        if (pthread_mutex_init(&philo->meal_count_mutex, NULL))
+            return (ft_error(MUTEX_ERR), false);
+        if (pthread_mutex_init(&philo->time_last_meal_mutex, NULL))
+            return (ft_error(MUTEX_ERR), false);
+        if (pthread_mutex_init(&philo->time, NULL))
             return (ft_error(MUTEX_ERR), false);
         i++;
     }

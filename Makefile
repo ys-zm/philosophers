@@ -4,7 +4,7 @@ CC = cc
 C_FLAGS = -Wall -Wextra
 C_FLAGS += -Werror
 C_FLAGS += -arch x86_64
-# C_FLAGS += -g3 -fsanitize=address
+C_FLAGS += -g3 -fsanitize=address
 
 SRCS = philo.c \
 		philo_err.c \
@@ -14,7 +14,8 @@ SRCS = philo.c \
 		philo_time.c \
 		philo_init.c \
 		philo_simulation.c \
-		philo_death.c
+		philo_death.c \
+		philo_actions.c
 
 SRC_DIR = src
 

@@ -40,8 +40,8 @@ int main(int argc, char **argv)
     if (data->n_philos < MIN_PHILO || data->n_philos > MAX_PHILO)
         return (free(data), ft_error(N_PHILO_ERR));
     philos = malloc(sizeof(t_philo) * data->n_philos);
-    if (philos)
-        return (ft_error(MEM_ERR), EXIT_FAILURE);
+    if (!philos)
+        return (ft_error(MEM_ERR));
     if (!ft_init(data, philos))
         return (ft_free_philos(philos), EXIT_FAILURE);
     if (ft_set_start_time(data, philos))

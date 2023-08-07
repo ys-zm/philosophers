@@ -11,7 +11,7 @@
 
 #define MAX_PHILO 200
 #define MIN_PHILO 1
-#define	INFINITE -1;
+#define	INFINITE -1
 
 typedef struct timeval t_timeval;
 
@@ -28,9 +28,9 @@ typedef enum s_err_msg
 
 typedef enum s_status
 {
-	ALIVE,
+	FULL,
 	DEAD,
-	FULL
+	ALIVE
 }	ph_status;
 
 typedef enum s_event
@@ -59,18 +59,21 @@ typedef struct	s_var
 // mutex protects a variable, doesnt have to be the variable
 // mutex has to be there for anything that tries to edit data at the same time
 // a thread that checks other threads
+
 typedef struct s_philo
 {
 	int				philo_id;
 	long			start_time_ms;
 	ph_status		status;
 	t_timeval		time_last_meal;
+	pthread_mutex_t	time_last_meal_mutex;
 	bool			alive;
 	pthread_t		philo_thread;
-	int				eat_count;
-	pthread_mutex_t	eat_count_mutex;
+	int				meal_count;
+	pthread_mutex_t	meal_count_mutex;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	time;
 	t_var			*data;
 }	t_philo;
 
@@ -118,7 +121,7 @@ bool    	init_philo(t_var *data, t_philo *philos);
 
 void		set_l_fork(t_philo *philos, int n_philos);
 
-// philo_actions.c
+// philo_time.c
 
 long		get_time_ms(void);
 
@@ -140,6 +143,9 @@ void    	*ft_action_loop(void *arg);
 
 // philo_death.c
 
-void    	philo_check_dead(t_philo *philos);
+void    	philo_check_status(t_philo *philos);
+
+//philo_action.c
+void    *ft_action_loop(void *arg);
 
 #endif

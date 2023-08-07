@@ -15,7 +15,8 @@ void    ft_destroy_all_mutexes(t_philo *philos)
     n_philos = philos->data->n_philos;
     while (i < n_philos)
     {
-        pthread_mutex_destroy(&philos[i].eat_count_mutex);
+        pthread_mutex_destroy(&philos[i].time_last_meal_mutex);
+        pthread_mutex_destroy(&philos[i].meal_count_mutex);
         pthread_mutex_destroy(&philos[i].r_fork);
         i++;
     }

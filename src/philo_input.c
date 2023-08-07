@@ -18,7 +18,7 @@ bool philo_input_check(char **argv, t_var *data)
         printf("nmeals: %d\n", data->n_meals);
     }
     else
-        data->n_meals = -1;
+        data->n_meals = INFINITE;
     if (data->n_philos < 0 || data->time_to_die < 0 || data->time_to_eat < 0 || data->time_to_sleep < 0)
         return (false);
     if (argv[5] && data->n_meals < 0)

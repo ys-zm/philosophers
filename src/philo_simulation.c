@@ -1,12 +1,5 @@
 #include "philo.h"
 
-void    *ft_action_loop(void *arg)
-{
-    (void)arg;
-    //eat, sleep, think!
-    return (NULL);
-}
-
 bool    ft_create_threads(t_philo *philos)
 {
     int i;
@@ -53,7 +46,7 @@ void    philo_simulation(t_philo *philos)
         printf("Error creating threads\n");
         return ;
     }
-    philo_check_dead(philos);
+    philo_check_status(philos);
     if (!ft_join_threads(philos))
         printf("Error joining threads\n");
 }
