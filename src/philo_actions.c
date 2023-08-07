@@ -4,12 +4,13 @@ bool    ft_death_status(t_philo *philo)
 {
     bool death;
 
-    pthread_mutex_lock(&philo->data->death);
-    if (philo->data->is_dead == true)
-        death = true;
-    else
-        death = false;
+    // printf(" philo %d tyring to death lock\n", philo->philo_id);
+    if (pthread_mutex_lock(&philo->data->death))
+        printf("problem with lock\n");
+    // printf("death locked\n");
+    death = philo->data->is_dead == true;
     pthread_mutex_unlock(&philo->data->death);
+    // printf("philo %d death unlocked\n", philo->philo_id);
     return (death);
 }
 
@@ -27,13 +28,22 @@ bool    ft_check_thread_creation(t_var *data)
 
 bool    ft_take_forks(t_philo *philo)
 {
-    if (ft_death_status(philo))
-        return (false);
-    pthread_mutex_lock(&philo->r_fork);
-    philo_print(philo, TAKE_FORK);
-    pthread_mutex_lock(philo->l_fork);
-    philo_print(philo, TAKE_FORK);
-    return (true);
+    if (!ft_death_status(philo))
+    {
+        pthread_mutex_lock(&philo->r_fork);
+        philo_print(philo, TAKE_FORK);
+    }
+    if (!ft_death_status(philo))
+    {
+        pthread_mutex_lock(philo->l_fork);
+        philo_print(philo, TAKE_FORK);
+        return (true);
+    }
+    // else
+    // {
+    //     pthread_mutex_unlock(&philo->r_fork);
+    // }
+    return (false);
 }
 
 void    ft_drop_forks(t_philo *philo)
@@ -58,22 +68,26 @@ void    ft_update_meal_count(t_philo *philo)
 
 bool    ft_eat(t_philo *philo)
 {
-    if (ft_death_status(philo))
-        return (false);
-    ft_update_last_meal_time(philo);
-    philo_print(philo, EAT);
-    ft_update_meal_count(philo);
-    ft_sleep_ms(philo->data->time_to_eat);
-    return (true);
+    if (!ft_death_status(philo))
+    {
+        ft_update_last_meal_time(philo);
+        philo_print(philo, EAT);
+        ft_update_meal_count(philo);
+        ft_sleep_ms(philo->data->time_to_eat);
+        return (true);
+    }
+    return (false);
 }
 
 bool    ft_sleep(t_philo *philo)
 {
-    if (ft_death_status(philo))
-        return (false);
-    philo_print(philo, SLEEP);
-    ft_sleep_ms(philo->data->time_to_sleep);
-    return (true);
+    if (!ft_death_status(philo))
+    {
+        philo_print(philo, SLEEP);
+        ft_sleep_ms(philo->data->time_to_sleep);
+        return (true);
+    }
+    return (false);
 }
 // i can only pass one argument to my action loop, but i want to know the index and have the data struct :)
 // check if is dead is false then print.
@@ -84,8 +98,9 @@ void    *ft_action_loop(void *arg)
     philo = (t_philo *)arg;
     if (!ft_check_thread_creation(philo->data))
         return (NULL);
+    usleep(100);
     if (philo->philo_id % 2 == 1)
-        ft_sleep_ms(30);
+        usleep(50);
     while (philo->status == ALIVE)
     {
         if (!ft_take_forks(philo))
@@ -97,6 +112,8 @@ void    *ft_action_loop(void *arg)
             break ;
         if (!ft_death_status(philo))
             philo_print(philo, THINK);
+        else
+            break ;
     }
     return (NULL);
 }

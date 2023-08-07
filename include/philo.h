@@ -145,7 +145,9 @@ void    	*ft_action_loop(void *arg);
 
 void    	philo_check_status(t_philo *philos);
 
-//philo_action.c
+//philo_actions.c
 void    *ft_action_loop(void *arg);
+
+bool    ft_death_status(t_philo *philo);
 
 #endif

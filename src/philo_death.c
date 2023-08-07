@@ -49,7 +49,6 @@ void    philo_check_status(t_philo *philos)
     int n_philos;
     int philos_done_eating;
 
-    printf("HEREEE!\n");
     n_philos = philos->data->n_philos;
     while (1)
     {
