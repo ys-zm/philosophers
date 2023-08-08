@@ -30,9 +30,12 @@ static  ph_status check_death(t_philo *philo)
 
 static  void    ft_death(t_philo *philo)
 {
+    long    now;
+
+    now = find_time_diff(get_time_ms(), philo->start_time_ms);
     pthread_mutex_lock(&philo->data->death);
     philo->data->is_dead = true;
-    philo_print(philo, DIE);
+    printf("%ld: philo %d died\n", now, philo->philo_id);
     pthread_mutex_unlock(&philo->data->death);
 }
 

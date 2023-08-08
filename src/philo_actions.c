@@ -28,21 +28,15 @@ bool    ft_check_thread_creation(t_var *data)
 
 bool    ft_take_forks(t_philo *philo)
 {
+    pthread_mutex_lock(&philo->r_fork);
     if (!ft_death_status(philo))
-    {
-        pthread_mutex_lock(&philo->r_fork);
         philo_print(philo, TAKE_FORK);
-    }
+    pthread_mutex_lock(philo->l_fork);
     if (!ft_death_status(philo))
     {
-        pthread_mutex_lock(philo->l_fork);
         philo_print(philo, TAKE_FORK);
         return (true);
     }
-    // else
-    // {
-    //     pthread_mutex_unlock(&philo->r_fork);
-    // }
     return (false);
 }
 
@@ -99,8 +93,9 @@ void    *ft_action_loop(void *arg)
     if (!ft_check_thread_creation(philo->data))
         return (NULL);
     usleep(100);
+    ft_update_last_meal_time(philo);
     if (philo->philo_id % 2 == 1)
-        usleep(50);
+        usleep(100);
     while (philo->status == ALIVE)
     {
         if (!ft_take_forks(philo))

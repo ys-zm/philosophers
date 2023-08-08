@@ -53,7 +53,5 @@ void    philo_print(t_philo *philo, ph_event event)
     else if (event == SLEEP)
         printf("%ld: philo %d is sleeping\n", now, philo->philo_id);
     else if (event == TAKE_FORK)
-        printf("%ld: philo %d took a fork\n", now, philo->philo_id);
-    else if (event == DIE)
-        printf("%ld: philo %d died\n", now, philo->philo_id);
+        printf("%ld: philo %d has taken a fork\n", now, philo->philo_id);
 }
