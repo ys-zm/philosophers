@@ -4,13 +4,9 @@ bool    ft_death_status(t_philo *philo)
 {
     bool death;
 
-    // printf(" philo %d tyring to death lock\n", philo->philo_id);
-    if (pthread_mutex_lock(&philo->data->death))
-        printf("problem with lock\n");
-    // printf("death locked\n");
+    pthread_mutex_lock(&philo->data->death);
     death = philo->data->is_dead == true;
     pthread_mutex_unlock(&philo->data->death);
-    // printf("philo %d death unlocked\n", philo->philo_id);
     return (death);
 }
 
@@ -29,15 +25,17 @@ bool    ft_check_thread_creation(t_var *data)
 bool    ft_take_forks(t_philo *philo)
 {
     pthread_mutex_lock(&philo->r_fork);
-    if (!ft_death_status(philo))
-        philo_print(philo, TAKE_FORK);
+    // if (!ft_death_status(philo))
+    if (!philo_print(philo, TAKE_FORK))
+        return (false);
     pthread_mutex_lock(philo->l_fork);
-    if (!ft_death_status(philo))
-    {
-        philo_print(philo, TAKE_FORK);
-        return (true);
-    }
-    return (false);
+    // if (!ft_death_status(philo))
+    // {
+    if (!philo_print(philo, TAKE_FORK))
+        return (false);
+    return (true);
+    // }
+    //return (false);
 }
 
 void    ft_drop_forks(t_philo *philo)
@@ -62,10 +60,9 @@ void    ft_update_meal_count(t_philo *philo)
 
 bool    ft_eat(t_philo *philo)
 {
-    if (!ft_death_status(philo))
+    if (philo_print(philo, EAT))
     {
         ft_update_last_meal_time(philo);
-        philo_print(philo, EAT);
         ft_update_meal_count(philo);
         ft_sleep_ms(philo->data->time_to_eat);
         return (true);
@@ -75,9 +72,8 @@ bool    ft_eat(t_philo *philo)
 
 bool    ft_sleep(t_philo *philo)
 {
-    if (!ft_death_status(philo))
+    if (philo_print(philo, SLEEP))
     {
-        philo_print(philo, SLEEP);
         ft_sleep_ms(philo->data->time_to_sleep);
         return (true);
     }
@@ -98,17 +94,16 @@ void    *ft_action_loop(void *arg)
         usleep(100);
     while (philo->status == ALIVE)
     {
-        if (!ft_take_forks(philo))
-            break ;
+        ft_take_forks(philo);
         if (!ft_eat(philo))
             break;
         ft_drop_forks(philo);
         if (!ft_sleep(philo))
             break ;
-        if (!ft_death_status(philo))
-            philo_print(philo, THINK);
-        else
+        if (!philo_print(philo, THINK))
             break ;
+       
     }
+    ft_drop_forks(philo);
     return (NULL);
 }

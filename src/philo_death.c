@@ -8,7 +8,6 @@ static int check_philos_done_eating(t_philo *philo)
     pthread_mutex_lock(&philo->meal_count_mutex);
     if (n_meals != INFINITE && philo->meal_count == n_meals)
     {
-        printf("philo %d is done eating!\n", philo->philo_id);
         return (pthread_mutex_unlock(&philo->meal_count_mutex), 1);
     }
     return (pthread_mutex_unlock(&philo->meal_count_mutex), 0);
@@ -22,13 +21,13 @@ static  ph_status check_death(t_philo *philo)
     pthread_mutex_lock(&philo->time_last_meal_mutex);
     time_last_meal_ms = convert_ms(philo->time_last_meal);
     diff = get_time_ms() - time_last_meal_ms;
-     pthread_mutex_unlock(&philo->time_last_meal_mutex);
+    pthread_mutex_unlock(&philo->time_last_meal_mutex);
     if ((int)diff > philo->data->time_to_die)
         return (DEAD);
     return (ALIVE);
 }
 
-static  void    ft_death(t_philo *philo)
+void    ft_death(t_philo *philo)
 {
     long    now;
 
@@ -59,7 +58,7 @@ void    philo_check_status(t_philo *philos)
         philos_done_eating = 0;
         while (i < n_philos)
         {
-            philos_done_eating += check_philos_done_eating(&philos[i]);//caculate
+            philos_done_eating += check_philos_done_eating(&philos[i]);
             philos[i].status = check_death(&philos[i]);
             if (philos[i].status == DEAD)
                 return (ft_death(&philos[i]));

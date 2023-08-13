@@ -83,6 +83,8 @@ typedef struct s_philo
 
 int			main(int argc, char **argv);
 
+void    single_philo_death(t_philo *philo, int time_to_die);
+
 // philo_utils.c
 
 void		ft_putstr_fd(char *str, int fd);
@@ -91,7 +93,7 @@ uint32_t	ft_strlen(char *str);
 
 int			ft_atoi(char *str);
 
-void		philo_print(t_philo *philo, ph_event event);
+bool		philo_print(t_philo *philo, ph_event event);
 
 // philo_err.c
 
@@ -144,6 +146,8 @@ void    	*ft_action_loop(void *arg);
 // philo_death.c
 
 void    	philo_check_status(t_philo *philos);
+
+void    ft_death(t_philo *philo);
 
 //philo_actions.c
 void    *ft_action_loop(void *arg);

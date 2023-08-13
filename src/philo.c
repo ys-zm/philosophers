@@ -2,9 +2,12 @@
 
 void    single_philo_death(t_philo *philo, int time_to_die)
 {
+    long    time;
+
     philo_print(philo, TAKE_FORK);
     ft_sleep_ms(time_to_die);
-    philo_print(philo, DIE);
+    time = find_time_diff(get_time_ms(), philo->start_time_ms);
+    printf("%ld: philo %d died\n", time, philo->philo_id);
 }
 
 bool    ft_set_start_time(t_var *data, t_philo *philos)
@@ -47,9 +50,7 @@ int main(int argc, char **argv)
     if (ft_set_start_time(data, philos))
         return (printf("Get time failed\n"), EXIT_FAILURE);
     if (data->time_to_die == 0)
-        philo_print(&philos[0], DIE);
-    else if (data->n_philos == 1)
-        single_philo_death(&philos[0], data->time_to_die);
+        printf("%d: philo %d died\n", 0, philos[0].philo_id);
     else
         philo_simulation(philos);
     ft_free_philos(philos);

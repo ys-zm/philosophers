@@ -39,6 +39,11 @@ bool    ft_join_threads(t_philo *philos)
 
 void    philo_simulation(t_philo *philos)
 {
+    if (philos->data->n_philos == 1)
+    {
+        single_philo_death(philos, philos->data->time_to_die);
+        return ;
+    }
     if (!ft_create_threads(philos))
     {
         ft_destroy_all_mutexes(philos);
