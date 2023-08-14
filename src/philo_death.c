@@ -52,6 +52,7 @@ void    philo_check_status(t_philo *philos)
     int philos_done_eating;
 
     n_philos = philos->data->n_philos;
+    // usleep(100);
     while (1)
     {
         i = 0;
@@ -66,5 +67,6 @@ void    philo_check_status(t_philo *philos)
         }
         if (philos_done_eating == n_philos)
             return (ft_full(philos->data));
+        usleep(100);
     }
 }

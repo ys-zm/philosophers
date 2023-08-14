@@ -39,13 +39,10 @@ int ft_atoi(char *str)
 bool    philo_print(t_philo *philo, ph_event event)
 {
     long    now;
-    bool    death;
-
-
+    
+    if (ft_death_status(philo) == true)
+        return (false);
     now = find_time_diff(get_time_ms(), philo->start_time_ms);
-    death = ft_death_status(philo);
-    if (death == true)
-        return false;
     if (event == EAT)
         printf("%ld: philo %d is eating\n", now, philo->philo_id);
     else if (event == THINK)

@@ -65,7 +65,8 @@ bool    ft_eat(t_philo *philo)
         ft_update_last_meal_time(philo);
         ft_update_meal_count(philo);
         ft_sleep_ms(philo->data->time_to_eat);
-        return (true);
+	ft_drop_forks(philo);
+	return (true);
     }
     return (false);
 }
@@ -88,21 +89,19 @@ void    *ft_action_loop(void *arg)
     philo = (t_philo *)arg;
     if (!ft_check_thread_creation(philo->data))
         return (NULL);
-    usleep(100);
     ft_update_last_meal_time(philo);
     if (philo->philo_id % 2 == 1)
-        usleep(100);
+        usleep(500);
     while (philo->status == ALIVE)
     {
-        ft_take_forks(philo);
+        if (!ft_take_forks(philo))
+		    break;
         if (!ft_eat(philo))
             break;
-        ft_drop_forks(philo);
         if (!ft_sleep(philo))
             break ;
         if (!philo_print(philo, THINK))
             break ;
-       
     }
     ft_drop_forks(philo);
     return (NULL);

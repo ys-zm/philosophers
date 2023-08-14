@@ -54,6 +54,7 @@ typedef struct	s_var
 	pthread_mutex_t	death;
 	int				total_philo_threads;
 	pthread_mutex_t	philo_thread_mutex;
+
 }	t_var;
 
 // mutex protects a variable, doesnt have to be the variable
@@ -73,8 +74,8 @@ typedef struct s_philo
 	pthread_mutex_t	meal_count_mutex;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	time;
 	t_var			*data;
+	pthread_mutex_t	time;
 }	t_philo;
 
 
