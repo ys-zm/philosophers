@@ -54,7 +54,7 @@ typedef struct	s_var
 	pthread_mutex_t	death;
 	int				total_philo_threads;
 	pthread_mutex_t	philo_thread_mutex;
-
+	pthread_mutex_t	print_mutex;
 }	t_var;
 
 // mutex protects a variable, doesnt have to be the variable
@@ -71,11 +71,11 @@ typedef struct s_philo
 	bool			alive;
 	pthread_t		philo_thread;
 	int				meal_count;
+	bool				full;
 	pthread_mutex_t	meal_count_mutex;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
 	t_var			*data;
-	pthread_mutex_t	time;
 }	t_philo;
 
 
@@ -84,7 +84,9 @@ typedef struct s_philo
 
 int			main(int argc, char **argv);
 
-void    single_philo_death(t_philo *philo, int time_to_die);
+void    	single_philo_death(t_philo *philo, int time_to_die);
+
+bool    	ft_set_start_time(t_var *data, t_philo *philos);
 
 // philo_utils.c
 
@@ -94,7 +96,7 @@ uint32_t	ft_strlen(char *str);
 
 int			ft_atoi(char *str);
 
-bool		philo_print(t_philo *philo, ph_event event);
+bool    philo_print(t_philo *philo, ph_event event);
 
 // philo_err.c
 
@@ -148,7 +150,7 @@ void    	*ft_action_loop(void *arg);
 
 void    	philo_check_status(t_philo *philos);
 
-void    ft_death(t_philo *philo);
+void    	ft_death(t_philo *philo);
 
 //philo_actions.c
 void    *ft_action_loop(void *arg);

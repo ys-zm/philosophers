@@ -1,58 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   philo.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: yzaim <marvin@codam.nl>                      +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/08/24 18:13:59 by yzaim         #+#    #+#                 */
+/*   Updated: 2023/08/24 18:14:00 by yzaim         ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void    single_philo_death(t_philo *philo, int time_to_die)
+void	single_philo_death(t_philo *philo, int time_to_die)
 {
-    long    time;
+	long	time;
 
-    philo_print(philo, TAKE_FORK);
-    ft_sleep_ms(time_to_die);
-    time = find_time_diff(get_time_ms(), philo->start_time_ms);
-    printf("%ld: philo %d died\n", time, philo->philo_id);
+	philo_print(philo, TAKE_FORK);
+	ft_sleep_ms(time_to_die);
+	time = find_time_diff(get_time_ms(), philo->start_time_ms);
+	printf("%ld: philo %d died\n", time, philo->philo_id);
 }
 
-bool    ft_set_start_time(t_var *data, t_philo *philos)
+bool	ft_set_start_time(t_var *data, t_philo *philos)
 {
-    int     i;
-    long    st_ms;
+	int		i;
+	long	st_ms;
 
-    i = 0;
-    if (gettimeofday(&data->start_time, NULL))
-        return (1);
-    st_ms = convert_ms(data->start_time);
-    while (i < data->n_philos)
-    {
-        philos[i].start_time_ms = st_ms;
-        i++;
-    }
-    return (0);
+	i = 0;
+	if (gettimeofday(&data->start_time, NULL))
+		return (1);
+	st_ms = convert_ms(data->start_time);
+	while (i < data->n_philos)
+	{
+		philos[i].start_time_ms = st_ms;
+		i++;
+	}
+	return (0);
 }
 
-//need to create my ft_sleep_ms function to sleep a desired amount of ms
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    t_var   *data;
-    t_philo *philos;
+	t_var	*data;
+	t_philo	*philos;
 
-    if (argc != 5 && argc != 6)
-        return (ft_error(ARG_ERR));
-    data = malloc(sizeof(t_var) * 1);
-    if (!data)
-        return (ft_error(MEM_ERR));
-    if (!philo_input_check(argv, data))
-        return (free(data), ft_error(INPUT_ERR));
-    if (data->n_philos < MIN_PHILO || data->n_philos > MAX_PHILO)
-        return (free(data), ft_error(N_PHILO_ERR));
-    philos = malloc(sizeof(t_philo) * data->n_philos);
-    if (!philos)
-        return (ft_error(MEM_ERR));
-    if (!ft_init(data, philos))
-        return (ft_free_philos(philos), EXIT_FAILURE);
-    if (ft_set_start_time(data, philos))
-        return (printf("Get time failed\n"), EXIT_FAILURE);
-    if (data->time_to_die == 0)
-        printf("%d: philo %d died\n", 0, philos[0].philo_id);
-    else
-        philo_simulation(philos);
-    ft_free_philos(philos);
-    return (EXIT_SUCCESS);
+	if (argc != 5 && argc != 6)
+		return (ft_error(ARG_ERR));
+	data = malloc(sizeof(t_var) * 1);
+	if (!data)
+		return (ft_error(MEM_ERR));
+	if (!philo_input_check(argv, data))
+		return (free(data), ft_error(INPUT_ERR));
+	if (data->n_philos < MIN_PHILO || data->n_philos > MAX_PHILO)
+		return (free(data), ft_error(N_PHILO_ERR));
+	philos = malloc(sizeof(t_philo) * data->n_philos);
+	if (!philos)
+		return (ft_error(MEM_ERR));
+	if (!ft_init(data, philos))
+		return (ft_free_philos(philos), EXIT_FAILURE);
+	if (data->time_to_die == 0)
+		printf("%d: philo %d died\n", 0, philos[0].philo_id);
+	else
+		philo_simulation(philos);
+	ft_free_philos(philos);
+	return (EXIT_SUCCESS);
 }
