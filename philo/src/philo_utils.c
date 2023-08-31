@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:15:20 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 16:04:26 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 17:36:45 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,40 +48,6 @@ int	ft_atoi(char *str)
 	return (ret);
 }
 
-// bool	philo_print(t_philo *philo, t_event event)
-// {
-// 	long	now;
-
-// 	pthread_mutex_lock(&philo->data->print_mutex);
-// 	if (ft_death_status(philo) == true)
-// 	{
-// 		pthread_mutex_unlock(&philo->data->print_mutex);
-// 		return (false);
-// 	}
-// 	if (event == EAT)
-// 	{
-// 		now = find_time_diff(get_time_ms(), philo->start_time_ms);
-// 		printf("%ld: philo %d is eating\n", now, philo->philo_id);
-// 	}
-// 	else if (event == THINK)
-// 	{
-// 		now = find_time_diff(get_time_ms(), philo->start_time_ms);
-// 		printf("%ld: philo %d is thinking\n", now, philo->philo_id);
-// 	}
-// 	else if (event == SLEEP)
-// 	{
-// 		now = find_time_diff(get_time_ms(), philo->start_time_ms);
-// 		printf("%ld: philo %d is sleeping\n", now, philo->philo_id);
-// 	}
-// 	else if (event == TAKE_FORK)
-// 	{
-// 		now = find_time_diff(get_time_ms(), philo->start_time_ms);
-// 		printf("%ld: philo %d has taken a fork\n", now, philo->philo_id);
-// 	}
-// 	pthread_mutex_unlock(&philo->data->print_mutex);
-// 	return (true);
-// }
-
 void	print_msg(int philo_id, long now, t_event event)
 {
 	if (event == EAT)
@@ -97,15 +63,22 @@ void	print_msg(int philo_id, long now, t_event event)
 bool	philo_print(t_philo *philo, t_event event)
 {
 	long	now;
+	bool	death_check;
 
 	now = find_time_diff(get_time_ms(), philo->data->start_time);
-	pthread_mutex_lock(&philo->data->death);
-	if (philo->data->is_dead == false)
+	// pthread_mutex_lock(&philo->data->death);
+	// if (philo->data->is_dead == false)
+	// {
+	// 	print_msg(philo->philo_id, now, event);
+	// 	pthread_mutex_unlock(&philo->data->death);
+	// 	return (false);
+	// }
+	// pthread_mutex_unlock(&philo->data->death);
+	death_check = ft_check_live_philo(philo);
+	if (death_check == false)
 	{
 		print_msg(philo->philo_id, now, event);
-		pthread_mutex_unlock(&philo->data->death);
 		return (false);
 	}
-	pthread_mutex_unlock(&philo->data->death);
 	return (true);
 }

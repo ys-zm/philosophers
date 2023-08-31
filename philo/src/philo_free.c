@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:34 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 15:00:11 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 17:20:34 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_destroy_all_mutexes(t_philo *philos)
 	{
 		pthread_mutex_destroy(&philos[i].meal_count_mutex);
 		pthread_mutex_destroy(&philos[i].r_fork);
+		pthread_mutex_destroy(&philos->data->alive_philo_mutex[i]);
 		i++;
 	}
 	pthread_mutex_destroy(&philos->data->time);

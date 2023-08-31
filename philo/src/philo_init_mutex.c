@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:44 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 14:20:52 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 17:20:07 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,6 @@ bool	init_data_mutexes(t_philo *philos)
 		pthread_mutex_destroy(&philos->data->death);
 		return (false);
 	}
-	// if (pthread_mutex_init(&philos->data->print_mutex, NULL))
-	// {
-	// 	pthread_mutex_destroy(&philos->data->start);
-	// 	pthread_mutex_destroy(&philos->data->death);
-	// 	return (false);
-	// }
 	return (true);
 }
 

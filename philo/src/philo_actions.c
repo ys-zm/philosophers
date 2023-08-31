@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:08 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 16:25:48 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 18:47:21 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,13 @@ bool	ft_eat(t_philo *philo)
 	if (!philo_print(philo, EAT))
 	{
 		ft_update_last_meal_time(philo);
-		ft_update_meal_count(philo);
 		ft_sleep_ms(philo, philo->data->time_to_eat);
 		ft_drop_forks(philo);
+		// if (ft_update_meal_count(philo))
+		// 	return (false);
+		philo->meal_count++;
+		if (philo->meal_count == philo->data->n_meals)
+			return (false);
 		return (true);
 	}
 	ft_drop_forks(philo);

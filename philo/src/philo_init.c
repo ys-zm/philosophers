@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:44 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 14:58:49 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 17:22:09 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,27 @@ bool	init_philo(t_var *data, t_philo *philos)
 	return (true);
 }
 
+bool	set_live_array(t_var *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->n_philos)
+	{
+		if (pthread_mutex_init(&data->alive_philo_mutex[i], NULL))
+			return (ft_error(MUTEX_ERR), false);
+		data->alive_philos[i] = 1;
+		i++;
+	}
+	return (true);
+}
+
 bool	ft_init(t_var *data, t_philo *philos)
 {
 	if (!init_philo(data, philos))
 		return (false);
 	if (!init_all_mutexes(philos))
 		return (false);
+	set_live_array(data);
 	return (true);
 }

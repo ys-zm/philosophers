@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:15:11 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 16:25:41 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 18:49:39 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_sleep_ms(t_philo *philo, long long time_to_sleep)
 	long long	start;
 
 	start = get_time_ms();
-	while (ft_death_status(philo) ==  false)
+	while (ft_death_status(philo) == false)
 	{
 		if (((long long)get_time_ms() - start) >= time_to_sleep)
 			break ;
-		usleep(50);
+		usleep(250);
 	}
 }

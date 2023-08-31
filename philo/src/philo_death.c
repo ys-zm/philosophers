@@ -6,26 +6,26 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:17 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 16:44:07 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 17:29:51 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	check_philos_done_eating(t_philo *philo)
-{
-	int	n_meals;
+// static int	check_philos_done_eating(t_philo *philo)
+// {
+// 	int	n_meals;
 
-	n_meals = philo->data->n_meals;
-	pthread_mutex_lock(&philo->meal_count_mutex);
-	if (n_meals != INFINITE && philo->full == true)
-	{
-		pthread_mutex_unlock(&philo->meal_count_mutex);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->meal_count_mutex);
-	return (0);
-}
+// 	n_meals = philo->data->n_meals;
+// 	pthread_mutex_lock(&philo->meal_count_mutex);
+// 	if (n_meals != INFINITE && philo->full == true)
+// 	{
+// 		pthread_mutex_unlock(&philo->meal_count_mutex);
+// 		return (1);
+// 	}
+// 	pthread_mutex_unlock(&philo->meal_count_mutex);
+// 	return (0);
+// }
 
 void	ft_death(t_philo *philo)
 {
@@ -38,12 +38,12 @@ void	ft_death(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->death);
 }
 
-static void	ft_full(t_var *data)
-{
-	pthread_mutex_lock(&data->death);
-	data->is_dead = true;
-	pthread_mutex_unlock(&data->death);
-}
+// static void	ft_full(t_var *data)
+// {
+// 	pthread_mutex_lock(&data->death);
+// 	data->is_dead = true;
+// 	pthread_mutex_unlock(&data->death);
+// }
 
 size_t	ft_time_since_meal(t_philo *philos, int philo_index)
 {
@@ -70,13 +70,13 @@ void	philo_check_status(t_philo *philos)
 		philos_done_eating = 0;
 		while (i < n_philos)
 		{
-			philos_done_eating += check_philos_done_eating(&philos[i]);
+			// philos_done_eating += check_philos_done_eating(&philos[i]);
 			time_since_meal = ft_time_since_meal(philos, i);
 			if (time_since_meal > (size_t)philos->data->time_to_die)
 				return (ft_death(&philos[i]));
 			i++;
 		}
-		if (philos_done_eating == n_philos)
-			return (ft_full(philos->data));
+		// if (philos_done_eating == n_philos)
+		// 	return (ft_full(philos->data));
 	}
 }

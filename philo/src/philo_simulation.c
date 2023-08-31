@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:15:00 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 16:09:03 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 18:56:53 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ bool	ft_create_threads(t_philo *philos)
 	philos->data->total_philo_threads = 0;
 	while (i < n_philos)
 	{
+		// ft_update_last_meal_time(&philos[i]);
 		if (pthread_create(&philos[i].philo_thread, NULL, \
 		ft_action_loop, &philos[i]))
 			break ;

@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:08 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 16:41:40 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 18:56:55 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ void	ft_update_last_meal_time(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->time);
 }
 
-void	ft_update_meal_count(t_philo *philo)
+bool	ft_update_meal_count(t_philo *philo)
 {
+	// pthread_mutex_lock(&philo->meal_count_mutex);
 	philo->meal_count++;
-	pthread_mutex_lock(&philo->meal_count_mutex);
 	if (philo->meal_count >= philo->data->n_meals)
 		philo->full = true;
-	pthread_mutex_unlock(&philo->meal_count_mutex);
+	// pthread_mutex_unlock(&philo->meal_count_mutex);
+	if (philo->full == true)
+		return (true);
+	return (false);
 }
 
 void	*ft_action_loop(void *arg)

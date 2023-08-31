@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:39:58 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 16:47:30 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/08/31 18:57:50 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,10 @@ typedef struct s_philo
 {
 	int				philo_id;
 	size_t			last_meal;
-	bool			alive;
 	pthread_t		philo_thread;
 	int				meal_count;
 	bool			full;
-	pthread_mutex_t	meal_count_mutex;
+	pthread_mutex_t	meal_count_mutex; // remove meal count
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	*l_fork;
 	t_var			*data;
@@ -82,8 +81,9 @@ typedef struct s_var
 	pthread_mutex_t	start;		//start the threads & check thread creation!
 	// pthread_mutex_t	print_mutex; // maybe not needed		
 	pthread_mutex_t	death; // death used by all
-	pthread_mutex_t	time;		// time used by all
-	pthread_mutex_t	dead_philos[201];
+	pthread_mutex_t	time;		// time used by all/ watcher thread
+	pthread_mutex_t	alive_philo_mutex[201];
+	bool			alive_philos[201];
 }	t_var;
 
 
@@ -141,7 +141,7 @@ bool			init_philo_mutexes(t_philo *philos);
 
 size_t			get_time_ms(void);
 
-void		ft_sleep_ms(t_philo *philo, long long time_to_sleep);
+void			ft_sleep_ms(t_philo *philo, long long time_to_sleep);
 
 long			find_time_diff(long t1, long t2);
 
@@ -167,6 +167,8 @@ void			ft_death(t_philo *philo);
 
 bool			ft_death_status(t_philo *philo);
 
+bool	ft_check_live_philo(t_philo *philo);
+
 // philo_actions.c
 
 bool			ft_take_forks(t_philo *philo);
@@ -185,7 +187,7 @@ bool			ft_check_thread_creation(t_var *data);
 
 void			ft_update_last_meal_time(t_philo *philo);
 
-void			ft_update_meal_count(t_philo *philo);
+bool			ft_update_meal_count(t_philo *philo);
 
 void			*ft_action_loop(void *arg);
 

@@ -3,7 +3,7 @@ NAME = philo
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror -pthread
 # C_FLAGS += -arch x86_64
-# C_FLAGS += -g3 -fsanitize=address
+C_FLAGS += -g3 -fsanitize=address
 
 SRCS = philo.c \
 		philo_err.c \
