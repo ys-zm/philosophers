@@ -1,4 +1,4 @@
-Implementation of the Dining Philosophers Problem. A simulation using concurrent programming where multiple threads run independently and share the same memory resources.
+Implementation of the **Dining Philosophers Problem**. A simulation using concurrent programming where multiple threads run independently and share the same memory resources.
 
 Compiling:
 1.`make` creates the executable named "philo"
