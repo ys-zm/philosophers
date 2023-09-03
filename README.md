@@ -1,10 +1,10 @@
 Implementation of the **Dining Philosophers Problem**. A simulation using concurrent programming where multiple threads run independently and share the same memory resources.
 
 Compiling:
-1.`make` creates the executable named "philo"
-2. `make clean` removes object files
-3. `make fclean` removes object files and the executable
-4. `make re` calls `make fclean` followed by `make`
+1.`make` creates the executable named "philo"  
+2. `make clean` removes object files  
+3. `make fclean` removes object files and the executable  
+4. `make re` calls `make fclean` followed by `make`  
 
 Usage:
 ```
