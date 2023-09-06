@@ -6,11 +6,21 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:15:11 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 18:49:39 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/09/01 17:04:06 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+bool	ft_death_status(t_philo *philo)
+{
+	bool	death;
+
+	pthread_mutex_lock(&philo->life_mutex);
+	death = !philo->alive;
+	pthread_mutex_unlock(&philo->life_mutex);
+	return (death);
+}
 
 size_t	convert_ms(t_timeval t)
 {

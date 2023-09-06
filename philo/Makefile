@@ -3,7 +3,8 @@ NAME = philo
 CC = cc
 C_FLAGS = -Wall -Wextra -Werror -pthread
 # C_FLAGS += -arch x86_64
-C_FLAGS += -g3 -fsanitize=address
+# C_FLAGS += -g3 -fsanitize=thread
+# C_FLAGS += -g3 -fsanitize=address
 
 SRCS = philo.c \
 		philo_err.c \
@@ -16,8 +17,7 @@ SRCS = philo.c \
 		philo_death.c \
 		philo_actions.c \
 		philo_init_mutex.c \
-		philo_death_status.c \
-		philo_actionloop.c
+		philo_loop.c
 
 SRC_DIR = src
 

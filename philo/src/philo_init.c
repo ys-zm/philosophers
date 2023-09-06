@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:44 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 17:22:09 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/09/01 17:01:15 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,8 @@ bool	init_philo(t_var *data, t_philo *philos)
 		philos[i].philo_id = i + 1;
 		philos[i].data = data;
 		philos[i].meal_count = 0;
+		philos[i].alive = true;
 		philos[i].full = false;
-		i++;
-	}
-	data->is_dead = false;
-	return (true);
-}
-
-bool	set_live_array(t_var *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->n_philos)
-	{
-		if (pthread_mutex_init(&data->alive_philo_mutex[i], NULL))
-			return (ft_error(MUTEX_ERR), false);
-		data->alive_philos[i] = 1;
 		i++;
 	}
 	return (true);
@@ -59,10 +44,12 @@ bool	set_live_array(t_var *data)
 
 bool	ft_init(t_var *data, t_philo *philos)
 {
+	data->init_fork_mutex = 0;
+	data->init_full_mutex = 0;
+	data->init_life_mutex = 0;
 	if (!init_philo(data, philos))
 		return (false);
 	if (!init_all_mutexes(philos))
 		return (false);
-	set_live_array(data);
 	return (true);
 }

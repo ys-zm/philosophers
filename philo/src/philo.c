@@ -6,21 +6,11 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:13:59 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 14:52:58 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/09/01 16:50:49 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	single_philo_death(t_philo *philo, int time_to_die)
-{
-	long	time;
-
-	philo_print(philo, TAKE_FORK);
-	ft_sleep_ms(philo, time_to_die);
-	time = find_time_diff(get_time_ms(), philo->data->start_time);
-	printf("%ld: philo %d died\n", time, philo->philo_id);
-}
 
 int	main(int argc, char **argv)
 {
@@ -45,6 +35,7 @@ int	main(int argc, char **argv)
 		printf("%d: philo %d died\n", 0, philos[0].philo_id);
 	else
 		philo_simulation(philos);
+	ft_destroy_all_mutexes(philos);
 	ft_free_philos(philos);
 	return (EXIT_SUCCESS);
 }

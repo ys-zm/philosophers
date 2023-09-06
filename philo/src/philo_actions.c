@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:08 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 18:47:21 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/09/01 16:35:12 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,6 @@ void	ft_drop_forks(t_philo *philo)
 	pthread_mutex_unlock(philo->l_fork);
 }
 
-t_status	check_death(t_philo *philo)
-{
-	long	diff;
-
-	pthread_mutex_lock(&philo->data->time);
-	diff = get_time_ms() - philo->last_meal;
-	pthread_mutex_unlock(&philo->data->time);
-	if ((int)diff > philo->data->time_to_die)
-		return (DEAD);
-	return (ALIVE);
-}
-
 bool	ft_eat(t_philo *philo)
 {
 	if (!philo_print(philo, EAT))
@@ -46,11 +34,14 @@ bool	ft_eat(t_philo *philo)
 		ft_update_last_meal_time(philo);
 		ft_sleep_ms(philo, philo->data->time_to_eat);
 		ft_drop_forks(philo);
-		// if (ft_update_meal_count(philo))
-		// 	return (false);
 		philo->meal_count++;
 		if (philo->meal_count == philo->data->n_meals)
+		{
+			pthread_mutex_lock(&philo->full_mutex);
+			philo->full = true;
+			pthread_mutex_unlock(&philo->full_mutex);
 			return (false);
+		}
 		return (true);
 	}
 	ft_drop_forks(philo);

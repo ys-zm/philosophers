@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:15:20 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 17:36:45 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/09/01 16:48:17 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,7 @@ bool	philo_print(t_philo *philo, t_event event)
 	bool	death_check;
 
 	now = find_time_diff(get_time_ms(), philo->data->start_time);
-	// pthread_mutex_lock(&philo->data->death);
-	// if (philo->data->is_dead == false)
-	// {
-	// 	print_msg(philo->philo_id, now, event);
-	// 	pthread_mutex_unlock(&philo->data->death);
-	// 	return (false);
-	// }
-	// pthread_mutex_unlock(&philo->data->death);
-	death_check = ft_check_live_philo(philo);
+	death_check = ft_death_status(philo);
 	if (death_check == false)
 	{
 		print_msg(philo->philo_id, now, event);

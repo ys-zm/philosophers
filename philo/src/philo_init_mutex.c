@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:14:44 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 17:20:07 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/09/01 16:53:25 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,13 @@ bool	init_philo_mutexes(t_philo *philos)
 		philo = &philos[i];
 		if (pthread_mutex_init(&philo->r_fork, NULL))
 			return (ft_error(MUTEX_ERR), false);
-		if (pthread_mutex_init(&philo->meal_count_mutex, NULL))
+		philos->data->init_fork_mutex++;
+		if (pthread_mutex_init(&philo->life_mutex, NULL))
 			return (ft_error(MUTEX_ERR), false);
-		// if (pthread_mutex_init(&philo->time_last_meal_mutex, NULL))
-		// 	return (ft_error(MUTEX_ERR), false);
+		philos->data->init_life_mutex++;
+		if (pthread_mutex_init(&philo->full_mutex, NULL))
+			return (ft_error(MUTEX_ERR), false);
+		philos->data->init_full_mutex++;
 		i++;
 	}
 	set_l_fork(philos, n_philos);
@@ -39,15 +42,9 @@ bool	init_data_mutexes(t_philo *philos)
 {
 	if (pthread_mutex_init(&philos->data->start, NULL))
 		return (false);
-	if (pthread_mutex_init(&philos->data->death, NULL))
-	{
-		pthread_mutex_destroy(&philos->data->start);
-		return (false);
-	}
 	if (pthread_mutex_init(&philos->data->time, NULL))
 	{
 		pthread_mutex_destroy(&philos->data->start);
-		pthread_mutex_destroy(&philos->data->death);
 		return (false);
 	}
 	return (true);

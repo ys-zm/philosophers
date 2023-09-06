@@ -6,7 +6,7 @@
 /*   By: yzaim <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/24 18:15:00 by yzaim         #+#    #+#                 */
-/*   Updated: 2023/08/31 18:56:53 by yzaim         ########   odam.nl         */
+/*   Updated: 2023/09/01 16:50:08 by yzaim         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ bool	ft_create_threads(t_philo *philos)
 	philos->data->total_philo_threads = 0;
 	while (i < n_philos)
 	{
-		// ft_update_last_meal_time(&philos[i]);
 		if (pthread_create(&philos[i].philo_thread, NULL, \
 		ft_action_loop, &philos[i]))
 			break ;
@@ -51,8 +50,24 @@ bool	ft_join_threads(t_philo *philos)
 	return (true);
 }
 
+void	single_philo_death(t_philo *philo)
+{
+	long	time;
+
+	philo->data->start_time = get_time_ms();
+	philo_print(philo, TAKE_FORK);
+	ft_sleep_ms(philo, philo->data->time_to_die);
+	time = find_time_diff(get_time_ms(), philo->data->start_time);
+	printf("%ld: philo %d died\n", time, philo->philo_id);
+}
+
 void	philo_simulation(t_philo *philos)
 {
+	if (philos->data->n_philos == 1)
+	{
+		single_philo_death(philos);
+		return ;
+	}
 	if (!ft_create_threads(philos))
 	{
 		ft_join_threads(philos);
