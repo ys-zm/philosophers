@@ -1,7 +1,14 @@
-Implementation of the **Dining Philosophers Problem**. A simulation using concurrent programming where multiple threads run independently and share the same memory resources.
+Implementation of the **Dining Philosophers Problem**. A simulation of concurrent programming where multiple threads run independently and the read/write access of shared resources are protected (using mutexes).
 
 ---
+Overview
+N philosophers sit around a circular table, each one having brought one fork only. Tragically, they are only able to eat using two forks, so when hungry, they must borrow the fork of their neighbour (hygiene is not an issue here). This means two philosophers that are sitting next one another cannot eat at the same time. 
 
+Throughout the simulation, the philosophers complete three tasks on repeat for a given amount of time: eat, sleep and think. If they do not eat in time, they die.
+
+The simulation runs with the inputted time data, and stops if/ when a philosopher dies, or the user quits the program.
+
+---
 Compiling:  
 1.`make` creates the executable named "philo"  
 2. `make clean` removes object files  
