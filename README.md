@@ -9,7 +9,8 @@ Throughout the simulation, the philosophers complete three tasks on repeat for a
 The simulation runs with the inputted time data, and stops if/ when a philosopher dies, or the user quits the program.
 
 ---
-## Compiling:  
+## Compiling: 
+
 1.`make` creates the executable named "philo" 
 
 2. `make clean` removes object files
