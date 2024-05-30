@@ -11,7 +11,7 @@ The simulation runs with the inputted time data, and stops if/ when a philosophe
 ---
 ## Compiling: 
 
-1.`make` creates the executable named "philo" 
+1. `make` creates the executable named "philo" 
 
 2. `make clean` removes object files
    
