@@ -17,7 +17,7 @@ The simulation runs with the inputted time data, and stops if/ when a philosophe
    
 3. `make fclean` removes object files and the executable
    
-4. `make re` calls `make fclean` followed by `make`  
+4. `make re` calls `fclean` followed by `all`  
 
 ## Usage:
 ```
