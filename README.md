@@ -10,9 +10,12 @@ The simulation runs with the inputted time data, and stops if/ when a philosophe
 
 ---
 ## Compiling:  
-1.`make` creates the executable named "philo"  
-2. `make clean` removes object files  
-3. `make fclean` removes object files and the executable  
+1.`make` creates the executable named "philo" 
+
+2. `make clean` removes object files
+   
+3. `make fclean` removes object files and the executable
+   
 4. `make re` calls `make fclean` followed by `make`  
 
 ## Usage:
