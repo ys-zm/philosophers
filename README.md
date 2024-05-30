@@ -19,7 +19,7 @@ The simulation runs with the inputted time data, and stops if/ when a philosophe
 ```
 ./philo [n_philos] [time_to_die] [time_to_eat] [time_to_sleep] (max_meals)
 ```
-## Parameters:
+### Parameters:
 n_philos: the number of philosophers in the simulation, minimum 1 and maximum 200
 time_to_die: the number of milliseconds it takes for a philospher to die without eating
 time_to_eat: the number of millisecondsfor a philosopher to eat
